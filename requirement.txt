@@ -1,0 +1,12 @@
+fastapi==0.110.0
+uvicorn==0.27.0
+nltk==3.8.1
+requests==2.31.0
+streamlit==1.35.0
+python-dotenv==1.0.1
+snowflake-connector-python==3.7.3
+sagemaker==2.218.0
+jupyterlab
+pandas==2.2.2
+scikit-learn==1.4.2
+
