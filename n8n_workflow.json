@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "upload-case"
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 100]
+    },
+    {
+      "parameters": {
+        "url": "https://api.firecrawl.dev/crawl",
+        "method": "POST",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "url",
+              "value": "={{$json[\"url\"]}}"
+            }
+          ]
+        }
+      },
+      "name": "Extract with Firecrawl",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [300, 100]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/upload-case",
+        "method": "POST",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "text",
+              "value": "={{$json[\"content\"]}}"
+            }
+          ]
+        }
+      },
+      "name": "Send to FastAPI Backend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [500, 100]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [["Extract with Firecrawl"]]
+    },
+    "Extract with Firecrawl": {
+      "main": [["Send to FastAPI Backend"]]
+    }
+  }
+}
